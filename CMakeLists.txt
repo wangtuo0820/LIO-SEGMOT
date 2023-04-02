@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(lio_segmot)
 
 set(CMAKE_BUILD_TYPE "Release")
-set(CMAKE_CXX_FLAGS "-std=c++11")
+set(CMAKE_CXX_FLAGS "-std=c++14")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -g0 -pthread")
 
 find_package(catkin REQUIRED COMPONENTS
@@ -78,7 +78,7 @@ include_directories(
 	${catkin_INCLUDE_DIRS}
 	${PCL_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
-	${GTSAM_INCLUDE_DIR}
+  ${GTSAM_INCLUDE_DIR}
 )
 
 # link directories
@@ -88,6 +88,10 @@ link_directories(
   ${OpenCV_LIBRARY_DIRS}
   ${GTSAM_LIBRARY_DIRS}
 )
+
+
+set(GTSAM_INCLUDE_DIR "/usr/include/gtsam")
+set(GTSAM_LIBRARY_DIRS "/usr/local/lib/")
 
 ###########
 ## Build ##

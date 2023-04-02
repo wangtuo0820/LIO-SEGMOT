@@ -26,7 +26,8 @@ Detection::Detection(Detection::BoundingBox box,
 
 const double Detection::error(const gtsam::Pose3 x) const {
   gtsam::Vector errorVector = gtsam::traits<gtsam::Pose3>::Local(this->pose, x);
-  return sqrt(this->getDiagonal()->Mahalanobis(errorVector));
+  // return sqrt(this->getDiagonal()->Mahalanobis(errorVector)); // TODO
+  return sqrt(this->getDiagonal()->squaredMahalanobisDistance(errorVector));
 }
 
 /* -------------------------------------------------------------------------- */
@@ -159,7 +160,8 @@ double TightlyCoupledDetectionFactor::error(const gtsam::Values &c) const {
               boost::format(
                   "NoiseModelFactor: NoiseModel has dimension %1% instead of %2%.") %
               noiseModel->dim() % b.size()));
-    return 0.5 * noiseModel->distance(b);
+    // return 0.5 * noiseModel->distance(b);
+    return 0.5 * noiseModel->mahalanobisDistance(b); // TODO
   } else {
     return 0.0;
   }
@@ -271,7 +273,8 @@ double LooselyCoupledDetectionFactor::error(const gtsam::Values &c) const {
               boost::format(
                   "NoiseModelFactor: NoiseModel has dimension %1% instead of %2%.") %
               noiseModel->dim() % b.size()));
-    return 0.5 * noiseModel->distance(b);
+    // return 0.5 * noiseModel->distance(b); TODO
+    return 0.5 * noiseModel->mahalanobisDistance(b);
   } else {
     return 0.0;
   }
